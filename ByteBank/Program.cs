@@ -47,11 +47,15 @@ namespace ByteBank
         static void DeletarUsuario(List<string> cpfs, List<string> titulares, List<string> senhas, List<double> saldos)
         {
             Console.Write("Digite o cpf a ser removido: ");
-            cpfs.Remove(Console.ReadLine());
-            Console.Write("Digite o titular a ser removido: ");
-            cpfs.Remove(Console.ReadLine());
-            Console.Write("Digite a senha a ser removido: ");
-            cpfs.Remove(Console.ReadLine());
+            int index = cpfs.IndexOf(Console.ReadLine());
+            
+            
+            cpfs.RemoveAt(index);
+            titulares.RemoveAt(index);
+            senhas.RemoveAt(index);
+            saldos.RemoveAt(index);
+
+
         }
 
         static void ListarUsuarios(List<string> cpfs, List<string> titulares, List<double> saldos)
