@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Xml.Linq;
+using System.Collections.Generic;
 
 namespace ByteBank
 {
@@ -16,17 +17,60 @@ namespace ByteBank
             Console.WriteLine("0 - Para sair do programa");
             Console.Write("Digite a opção desejada: ");
 
+
+        }
+        static void ManipularConta()
+        {
+            int option;
+            do
+            {
+                Console.WriteLine("1 - Depositar");
+                Console.WriteLine("2 - Transferir");
+                Console.WriteLine("3 - Sacar");
+                Console.WriteLine("0 - Para voltar ao menu principal");
+                Console.Write("Digite a opção desejada: ");
+                option = int.Parse(Console.ReadLine());
+            } while (option != 0);
         }
 
-        static void RegistrarNovoUsuario(List<string> cpfs, List<string> titulares, List<double> saldos)
+        static void RegistrarNovoUsuario(List<string> cpfs, List<string> titulares, List<string> senhas, List<double> saldos)
         {
             Console.Write("Digite o cpf: ");
             cpfs.Add(Console.ReadLine());
             Console.Write("Digite o nome: ");
             titulares.Add(Console.ReadLine());
-
+            Console.Write("Digite a senha: ");
+            senhas.Add(Console.ReadLine());
             saldos.Add(0);
         }
+
+        static void DeletarUsuario(List<string> cpfs, List<string> titulares, List<string> senhas, List<double> saldos)
+        {
+            Console.Write("Digite o cpf a ser removido: ");
+            cpfs.Remove(Console.ReadLine());
+            Console.Write("Digite o titular a ser removido: ");
+            cpfs.Remove(Console.ReadLine());
+            Console.Write("Digite a senha a ser removido: ");
+            cpfs.Remove(Console.ReadLine());
+        }
+
+        static void ListarUsuarios(List<string> cpfs, List<string> titulares, List<double> saldos)
+        {
+            for (int i = 0; i < cpfs.Count; i++)
+            {
+                Console.WriteLine(cpfs[i] + ", " + titulares[i] + ", " + saldos[i]);
+            }
+        }
+
+        static void GeralRelatorioDeConta(List<string> cpfs, List<string> titulares, List<double> saldos)
+        {
+            Console.Write("Informe o cpf para localização: ");
+            int index = cpfs.IndexOf(Console.ReadLine());
+
+            Console.WriteLine(cpfs[index] + ", " + titulares[index] + ", " + saldos[index]);
+
+        }
+
         public static void Main(string[] args)
         {
 
@@ -47,6 +91,8 @@ namespace ByteBank
                 option = int.Parse(Console.ReadLine());
 
                 Console.WriteLine("--------------");
+                Console.WriteLine();
+
                 switch (option)
                 {
                     case 0:
@@ -54,17 +100,22 @@ namespace ByteBank
                         break;
                     case 1:
                         Console.WriteLine("Deveria estar inserindo um novo usuário!");
-                        RegistrarNovoUsuario(cpfs, titulares, saldos);
+                        RegistrarNovoUsuario(cpfs, titulares, senhas, saldos);
                         break;
                     case 2:
                         Console.WriteLine("Você solicitou Deletar");
-                        name = DeleteUser();
+                        DeletarUsuario(cpfs, titulares, senhas, saldos);
                         break;
                     case 3:
                         Console.WriteLine("Informando detalhes do usuário...");
+                        ListarUsuarios(cpfs, titulares, saldos);
                         break;
                     case 4:
                         Console.WriteLine("Informando saldo...");
+                        GeralRelatorioDeConta(cpfs, titulares, saldos);
+                        break;
+                    case 6:
+                        ManipularConta();
                         break;
                 }
                 Console.WriteLine("--------------");
