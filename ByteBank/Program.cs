@@ -44,7 +44,7 @@ namespace ByteBank
             saldos[index] += valor;
             Console.WriteLine($"Saldo atual R$ {saldos[index]}");
         }
-        static void Saque(List<string> cpfs, List<string> titulares, List<string> senhas, List<double> saldos)
+        static void Sacar(List<string> cpfs, List<string> titulares, List<string> senhas, List<double> saldos)
         {
             Console.Write("Informe o cpf da Conta: ");
             int index = cpfs.FindIndex(cpfs => cpfs == Console.ReadLine());
@@ -53,11 +53,14 @@ namespace ByteBank
             saldos[index] -= valor;
             Console.WriteLine($"Saldo atual R$ {saldos[index]}");
         }
-        static void Transferencia(List<string> cpfs, List<string> titulares, List<string> senhas, List<double> saldos, double valor)
+        static void Transferir(List<string> cpfs, List<string> titulares, List<string> senhas, List<double> saldos, double valor)
         {
-            Console.Write("Informe o cpf da conta a receber: ");
+            Console.Write("Informe seu cpf: ");
             int index = cpfs.FindIndex(cpfs => cpfs == Console.ReadLine());
-            saldos[index] += valor;
+            Console.Write("Informe o cpf da conta a receber: ");
+            int index2 = cpfs.FindIndex(cpfs => cpfs == Console.ReadLine());
+            saldos[index2] += valor;
+            saldos[index] -= valor;
         }
 
         static void RegistrarNovoUsuario(List<string> cpfs, List<string> titulares, List<string> senhas, List<double> saldos)
@@ -104,12 +107,11 @@ namespace ByteBank
         static void ManipularConta(List<string> cpfs, List<string> titulares, List<string> senhas, List<double> saldos)
         {
             int option;
-            int index = 0;
             do
             {
                 Console.WriteLine("1 - Depositar");
-                Console.WriteLine("2 - Transferir");
-                Console.WriteLine("3 - Sacar");
+                Console.WriteLine("2 - Sacar");
+                Console.WriteLine("3 - Transferir");
                 Console.WriteLine("0 - Para voltar ao menu principal");
                 Console.Write("Digite a opção desejada: ");
                 option = int.Parse(Console.ReadLine());
@@ -117,25 +119,24 @@ namespace ByteBank
                 Console.WriteLine("--------------");
                 Console.WriteLine();
 
-                switch (option != 0)
+                switch (option)
                 {
-                    case 0:
-                        Console.WriteLine("Digite o valor a ser depositado: ");
-                        double valor = double.Parse(Console.ReadLine());
-                        //Depositar(cpfs, titulares, saldos, valor, index);
-                        break;
                     case 1:
-                        Console.WriteLine("Deveria estar inserindo um novo usuário!");
-                        RegistrarNovoUsuario(cpfs, titulares, senhas, saldos);
+                        Console.WriteLine("Depositar ");
+                        double valor = double.Parse(Console.ReadLine());
+                        Depositar(cpfs, titulares, saldos);
                         break;
                     case 2:
-                        Console.WriteLine("Você solicitou Deletar");
-                        DeletarUsuario(cpfs, titulares, senhas, saldos);
+                        Console.WriteLine("Sacar");
+                        Sacar(cpfs, titulares, senhas, saldos);
                         break;
                     case 3:
-                        Console.WriteLine("Informando detalhes do usuário...");
-                        ListarUsuarios(cpfs, titulares, saldos);
+                        Console.WriteLine("Transferir");
+                        Console.Write("Insira o valor da transferencia: ");
+                        double valorTransferir = double.Parse(Console.ReadLine());
+                        Transferir(cpfs, titulares, senhas, saldos, valorTransferir);
                         break;
+                   
                 }
                 Console.WriteLine("--------------");
             } while (option != 0);
