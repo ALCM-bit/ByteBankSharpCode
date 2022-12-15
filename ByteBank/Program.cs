@@ -16,23 +16,26 @@ namespace ByteBank
             Console.WriteLine("6 - Manipular a conta"); // Implementa as operações
             Console.WriteLine("0 - Para sair do programa");
             Console.Write("Digite a opção desejada: ");
-
-
         }
-        static void ManipularConta()
+
+        static bool Logar(List<string> cpfs, List<string> titulares, List<string> senhas)
         {
-            int option;
-            do
+            Console.Write("Informe o cpf da Conta: ");
+            bool cpf = cpfs.Any(cpfs => cpfs == Console.ReadLine());
+            Console.Write("Informe a senha: ");
+            bool senha = senhas.Any(senhas => senhas == Console.ReadLine());
+
+            if (cpf == true && senha == true)
             {
-                Console.WriteLine("1 - Depositar");
-                Console.WriteLine("2 - Transferir");
-                Console.WriteLine("3 - Sacar");
-                Console.WriteLine("0 - Para voltar ao menu principal");
-                Console.Write("Digite a opção desejada: ");
-                option = int.Parse(Console.ReadLine());
-            } while (option != 0);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
-        static void Depositar(List<string> cpfs, List<string> titulares, List<string> senhas, List<double> saldos)
+  
+        static void Depositar(List<string> cpfs, List<string> titulares, List<double> saldos)
         {
             Console.Write("Informe o cpf da Conta: ");
             int index = cpfs.FindIndex(cpfs => cpfs == Console.ReadLine());
@@ -49,6 +52,12 @@ namespace ByteBank
             double valor = double.Parse(Console.ReadLine());
             saldos[index] -= valor;
             Console.WriteLine($"Saldo atual R$ {saldos[index]}");
+        }
+        static void Transferencia(List<string> cpfs, List<string> titulares, List<string> senhas, List<double> saldos, double valor)
+        {
+            Console.Write("Informe o cpf da conta a receber: ");
+            int index = cpfs.FindIndex(cpfs => cpfs == Console.ReadLine());
+            saldos[index] += valor;
         }
 
         static void RegistrarNovoUsuario(List<string> cpfs, List<string> titulares, List<string> senhas, List<double> saldos)
@@ -90,6 +99,46 @@ namespace ByteBank
             int index = cpfs.FindIndex(cpfs => cpfs == Console.ReadLine());
             Console.WriteLine(cpfs[index] + ", " + titulares[index] + ", " + saldos[index]);
 
+        }
+
+        static void ManipularConta(List<string> cpfs, List<string> titulares, List<string> senhas, List<double> saldos)
+        {
+            int option;
+            int index = 0;
+            do
+            {
+                Console.WriteLine("1 - Depositar");
+                Console.WriteLine("2 - Transferir");
+                Console.WriteLine("3 - Sacar");
+                Console.WriteLine("0 - Para voltar ao menu principal");
+                Console.Write("Digite a opção desejada: ");
+                option = int.Parse(Console.ReadLine());
+
+                Console.WriteLine("--------------");
+                Console.WriteLine();
+
+                switch (option != 0)
+                {
+                    case 0:
+                        Console.WriteLine("Digite o valor a ser depositado: ");
+                        double valor = double.Parse(Console.ReadLine());
+                        //Depositar(cpfs, titulares, saldos, valor, index);
+                        break;
+                    case 1:
+                        Console.WriteLine("Deveria estar inserindo um novo usuário!");
+                        RegistrarNovoUsuario(cpfs, titulares, senhas, saldos);
+                        break;
+                    case 2:
+                        Console.WriteLine("Você solicitou Deletar");
+                        DeletarUsuario(cpfs, titulares, senhas, saldos);
+                        break;
+                    case 3:
+                        Console.WriteLine("Informando detalhes do usuário...");
+                        ListarUsuarios(cpfs, titulares, saldos);
+                        break;
+                }
+                Console.WriteLine("--------------");
+            } while (option != 0);
         }
 
         public static void Main(string[] args)
@@ -136,7 +185,15 @@ namespace ByteBank
                         GerarRelatorioDeConta(cpfs, titulares, saldos);
                         break;
                     case 6:
-                        ManipularConta();
+                        bool check = Logar(cpfs, titulares, senhas);
+                        if (check == true)
+                        {
+                           ManipularConta(cpfs, titulares, senhas, saldos);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Login ou senha Invalidos !!!");
+                        }
                         break;
                 }
                 Console.WriteLine("--------------");
