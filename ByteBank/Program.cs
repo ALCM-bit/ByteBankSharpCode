@@ -62,7 +62,7 @@ namespace ByteBank
         {
             for (int i = 0; i < cpfs.Count; i++)
             {
-                Console.WriteLine(cpfs[i] + ", " + titulares[i] + ", " + saldos[i]);
+                Console.WriteLine($"CPF = {cpfs[i]} | Titular = {titulares[i]} | Saldo = R${saldos[i]:F2}");
             }
         }
 
