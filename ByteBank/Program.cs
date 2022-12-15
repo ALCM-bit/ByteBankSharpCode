@@ -32,6 +32,24 @@ namespace ByteBank
                 option = int.Parse(Console.ReadLine());
             } while (option != 0);
         }
+        static void Depositar(List<string> cpfs, List<string> titulares, List<string> senhas, List<double> saldos)
+        {
+            Console.Write("Informe o cpf da Conta: ");
+            int index = cpfs.FindIndex(cpfs => cpfs == Console.ReadLine());
+            Console.Write("Informe o valor a depositar: ");
+            double valor = double.Parse(Console.ReadLine());
+            saldos[index] += valor;
+            Console.WriteLine($"Saldo atual R$ {saldos[index]}");
+        }
+        static void Saque(List<string> cpfs, List<string> titulares, List<string> senhas, List<double> saldos)
+        {
+            Console.Write("Informe o cpf da Conta: ");
+            int index = cpfs.FindIndex(cpfs => cpfs == Console.ReadLine());
+            Console.Write("Informe o valor a sacar: ");
+            double valor = double.Parse(Console.ReadLine());
+            saldos[index] -= valor;
+            Console.WriteLine($"Saldo atual R$ {saldos[index]}");
+        }
 
         static void RegistrarNovoUsuario(List<string> cpfs, List<string> titulares, List<string> senhas, List<double> saldos)
         {
