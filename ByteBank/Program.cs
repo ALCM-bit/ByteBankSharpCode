@@ -47,7 +47,7 @@ namespace ByteBank
         static void DeletarUsuario(List<string> cpfs, List<string> titulares, List<string> senhas, List<double> saldos)
         {
             Console.Write("Digite o cpf a ser removido: ");
-            int index = cpfs.IndexOf(Console.ReadLine());
+            int index = cpfs.FindIndex(cpfs => cpfs == Console.ReadLine());
             
             
             cpfs.RemoveAt(index);
@@ -66,11 +66,10 @@ namespace ByteBank
             }
         }
 
-        static void GeralRelatorioDeConta(List<string> cpfs, List<string> titulares, List<double> saldos)
+        static void GerarRelatorioDeConta(List<string> cpfs, List<string> titulares, List<double> saldos)
         {
             Console.Write("Informe o cpf para localização: ");
-            int index = cpfs.IndexOf(Console.ReadLine());
-
+            int index = cpfs.FindIndex(cpfs => cpfs == Console.ReadLine());
             Console.WriteLine(cpfs[index] + ", " + titulares[index] + ", " + saldos[index]);
 
         }
@@ -116,7 +115,7 @@ namespace ByteBank
                         break;
                     case 4:
                         Console.WriteLine("Informando saldo...");
-                        GeralRelatorioDeConta(cpfs, titulares, saldos);
+                        GerarRelatorioDeConta(cpfs, titulares, saldos);
                         break;
                     case 6:
                         ManipularConta();
