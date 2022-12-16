@@ -34,6 +34,18 @@ namespace ByteBank
                 return false;
             }
         }
+
+        static void GerarRelatorio(List<double> saldos)
+        {
+            double total = 0;
+            for (int i = 0; i < saldos.Count; i++)
+            {
+                total+= saldos[i];
+            }
+
+            Console.WriteLine($"Total do Banco: {total}");
+
+        }
   
         static void Depositar(List<string> cpfs, List<string> titulares, List<double> saldos)
         {
@@ -123,7 +135,6 @@ namespace ByteBank
                 {
                     case 1:
                         Console.WriteLine("Depositar ");
-                        double valor = double.Parse(Console.ReadLine());
                         Depositar(cpfs, titulares, saldos);
                         break;
                     case 2:
@@ -184,6 +195,10 @@ namespace ByteBank
                     case 4:
                         Console.WriteLine("Informando saldo...");
                         GerarRelatorioDeConta(cpfs, titulares, saldos);
+                        break;
+                    case 5:
+                        Console.WriteLine("Informando saldo total do Banco");
+                        GerarRelatorio(saldos);
                         break;
                     case 6:
                         bool check = Logar(cpfs, titulares, senhas);
