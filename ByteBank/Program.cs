@@ -21,9 +21,11 @@ namespace ByteBank
         static bool Logar(List<string> cpfs, List<string> titulares, List<string> senhas)
         {
             Console.Write("Informe o cpf da Conta: ");
-            bool cpf = cpfs.Any(cpfs => cpfs == Console.ReadLine());
+            string pesquisar = Console.ReadLine();
+            bool cpf = cpfs.Any(cpfs => cpfs == pesquisar);
             Console.Write("Informe a senha: ");
-            bool senha = senhas.Any(senhas => senhas == Console.ReadLine());
+            string pegarSenha = Console.ReadLine();
+            bool senha = senhas.Any(senhas => senhas == pegarSenha);
 
             if (cpf == true && senha == true)
             {
@@ -50,7 +52,8 @@ namespace ByteBank
         static void Depositar(List<string> cpfs, List<string> titulares, List<double> saldos)
         {
             Console.Write("Informe o cpf da Conta: ");
-            int index = cpfs.FindIndex(cpfs => cpfs == Console.ReadLine());
+            string cpf = Console.ReadLine();
+            int index = cpfs.FindIndex(cpfs => cpfs == cpf);
             Console.Write("Informe o valor a depositar: ");
             double valor = double.Parse(Console.ReadLine());
             saldos[index] += valor;
@@ -59,7 +62,8 @@ namespace ByteBank
         static void Sacar(List<string> cpfs, List<string> titulares, List<string> senhas, List<double> saldos)
         {
             Console.Write("Informe o cpf da Conta: ");
-            int index = cpfs.FindIndex(cpfs => cpfs == Console.ReadLine());
+            string cpf = Console.ReadLine();
+            int index = cpfs.FindIndex(cpfs => cpfs == cpf);
             Console.Write("Informe o valor a sacar: ");
             double valor = double.Parse(Console.ReadLine());
             saldos[index] -= valor;
@@ -68,9 +72,11 @@ namespace ByteBank
         static void Transferir(List<string> cpfs, List<string> titulares, List<string> senhas, List<double> saldos, double valor)
         {
             Console.Write("Informe seu cpf: ");
-            int index = cpfs.FindIndex(cpfs => cpfs == Console.ReadLine());
+            string cpf1 = Console.ReadLine();
+            int index = cpfs.FindIndex(cpfs => cpfs == cpf1);
             Console.Write("Informe o cpf da conta a receber: ");
-            int index2 = cpfs.FindIndex(cpfs => cpfs == Console.ReadLine());
+            string cpf2 = Console.ReadLine();
+            int index2 = cpfs.FindIndex(cpfs => cpfs == cpf2);
             saldos[index2] += valor;
             saldos[index] -= valor;
         }
@@ -89,9 +95,8 @@ namespace ByteBank
         static void DeletarUsuario(List<string> cpfs, List<string> titulares, List<string> senhas, List<double> saldos)
         {
             Console.Write("Digite o cpf a ser removido: ");
-            int index = cpfs.FindIndex(cpfs => cpfs == Console.ReadLine());
-            
-            
+            string cpf = Console.ReadLine();
+            int index = cpfs.FindIndex(cpfs => cpfs == cpf);
             cpfs.RemoveAt(index);
             titulares.RemoveAt(index);
             senhas.RemoveAt(index);
@@ -111,8 +116,9 @@ namespace ByteBank
         static void GerarRelatorioDeConta(List<string> cpfs, List<string> titulares, List<double> saldos)
         {
             Console.Write("Informe o cpf para localização: ");
-            int index = cpfs.FindIndex(cpfs => cpfs == Console.ReadLine());
-            Console.WriteLine(cpfs[index] + ", " + titulares[index] + ", " + saldos[index]);
+            string cpf = Console.ReadLine();
+            int index = cpfs.FindIndex(cpfs => cpfs == cpf);
+            Console.WriteLine($"CPF = {cpfs[index]} | Titular = {titulares[index]} | Saldo = R${saldos[index]:F2}");
 
         }
 
