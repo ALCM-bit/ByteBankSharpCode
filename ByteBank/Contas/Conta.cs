@@ -2,13 +2,31 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace ByteBank.Contas
 {
     public class Conta
     {
-        public string Titular { get; set; }
+        private string titular;
+        public string Titular { 
+            get { return titular; }
+            private set 
+            {
+                if (Regex.IsMatch(value, @"^\d+$") == true)
+                {
+                    Console.WriteLine();
+                    Console.WriteLine("Valor invalido");
+                    Console.WriteLine();
+                    return;
+                }
+                else
+                {
+                    this.titular = value;
+                }
+            } 
+        }
         public string Cpf { get; set; }
         public string Senha { get; set; }
         public double Saldo { get; private set; }
