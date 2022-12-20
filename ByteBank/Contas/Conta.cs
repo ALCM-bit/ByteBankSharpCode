@@ -10,32 +10,28 @@ namespace ByteBank.Contas
     public class Conta
     {
         private string titular;
-        public string Titular { 
-            get { return titular; }
-            private set 
-            {
-                if (Regex.IsMatch(value, @"^\d+$") == true)
-                {
-                    Console.WriteLine();
-                    Console.WriteLine("Valor invalido");
-                    Console.WriteLine();
-                    return;
-                }
-                else
-                {
-                    this.titular = value;
-                }
-            } 
-        }
+        public string Titular { get; set; }
         public string Cpf { get; set; }
         public string Senha { get; set; }
         public double Saldo { get; private set; }
 
+        public bool check;
+
         public Conta(string titular, string cpf, string senha)
         {
-            this.Titular = titular;
+            if (Regex.IsMatch(titular, @"^\d+$") == true)
+            {
+                check = false;
+                return;
+            }
+            else
+            {
+                this.Titular = titular;
+            }
+
             this.Cpf = cpf;
             this.Senha = senha;
+            check = true;
         }
 
 
@@ -45,14 +41,8 @@ namespace ByteBank.Contas
 
         }
 
-        public static void ListarContas(List<Conta> contas)
-        {
-            foreach (Conta conta in contas)
-            {
-                Console.WriteLine(conta.Titular + ", " + conta.Cpf + ", " + conta.Senha + ", " + conta.Saldo);
-            }
-        }
 
-        
+
+
     }
 }
