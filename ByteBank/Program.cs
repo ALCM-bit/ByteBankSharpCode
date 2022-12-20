@@ -158,24 +158,38 @@ namespace ByteBank
             }
         }
 
-        public static void ExcluirConta(List<Conta> contas, string nome)
+        public static void ExcluirConta(List<Conta> contas, string cpf)
         {
-            int index = contas.FindIndex(contas => contas.Titular == nome);
-            contas.RemoveAt(index);
+            int index = contas.FindIndex(contas => contas.Cpf == cpf);
+            if (index == -1)
+            {
+                Console.WriteLine();
+                Console.WriteLine("Usuário não econtrado");
+                Console.WriteLine();
+                return;
 
+            }
+            else
+            {
+                contas.RemoveAt(index);
+            }
         }
+
+        static double VerificarSaldo(List<Conta> contas)
+        {
+            double saldo = 0.0;
+            foreach (Conta conta in contas)
+            {
+                saldo += conta.Saldo;
+            }
+
+            return saldo;
+        }
+
 
         public static void Main(string[] args)
         {
-
-            Console.WriteLine("Antes de começar a usar, vamos configurar alguns valores: ");
-            Console.Write("Digite a quantidade de Usuários: ");
             int option;
-
-            //List<string> cpfs = new List<string>();
-            //List<string> titulares = new List<string>();
-            //List<string> senhas = new List<string>();
-            //List<double> saldos = new List<double>();
             List<Conta> contas = new List<Conta>();
 
 
@@ -225,12 +239,12 @@ namespace ByteBank
                         ListarContas(contas);
                         break;
                     case 4:
-                        Console.WriteLine("Informando saldo...");
-                        //GerarRelatorioDeConta(cpfs, titulares, saldos);
+                        
                         break;
                     case 5:
-                        Console.WriteLine("Informando saldo total do Banco");
-                        //GerarRelatorio(saldos);
+                        Console.WriteLine("Saldo do Banco: ");
+
+                        Console.WriteLine("Saldo total: " + VerificarSaldo(contas));
                         break;
                     case 6:
                         //bool check = Logar(cpfs, titulares, senhas);
