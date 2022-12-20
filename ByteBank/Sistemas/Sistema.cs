@@ -19,5 +19,15 @@ namespace ByteBank.Sistemas
             Console.WriteLine("0 - Para sair do programa");
             Console.Write("Digite a opção desejada: ");
         }
+
+        public static void ShowMenuConta() 
+        {
+            Console.WriteLine("1 - Depositar");
+            Console.WriteLine("2 - Sacar");
+            Console.WriteLine("3 - Transferir");
+            Console.WriteLine("0 - Para voltar ao menu principal");
+            Console.Write("Digite a opção desejada: ");
+          
+        }
     }
 }
