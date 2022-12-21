@@ -51,12 +51,12 @@ namespace ByteBank.Contas
                 Console.WriteLine("Valores negativos não são aceitos");
                 Console.WriteLine();
             }
-            
+
         }
 
         public void Sacar(double valor)
         {
-            if (valor >= 0) 
+            if (valor >= 0)
             {
                 if (this.Saldo >= valor)
                 {
@@ -69,7 +69,7 @@ namespace ByteBank.Contas
                     Console.WriteLine();
                     return;
                 }
-                
+
             }
             else
             {
@@ -79,11 +79,8 @@ namespace ByteBank.Contas
                 return;
             }
 
-            
+
         }
-
-
-
 
     }
 }

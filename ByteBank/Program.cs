@@ -14,7 +14,7 @@ namespace ByteBank
         {
             foreach (Conta conta in contas)
             {
-                Console.WriteLine(conta.Titular + ", " + conta.Cpf + ", " + conta.Senha + ", " + conta.Saldo);
+                Console.WriteLine("Titular: " + conta.Titular + ", CPF: " + conta.Cpf + ", Saldo: " + conta.Saldo);
             }
         }
 
@@ -179,6 +179,26 @@ namespace ByteBank
                                             Console.Write("Digite o valor a ser depositado: ");
                                             double saque = double.Parse(Console.ReadLine());
                                             contas[indexSaque].Sacar(saque);
+                                        }
+                                        break;
+                                    case 3:
+                                        Console.WriteLine("Transferir");
+                                        int indexRemetente = contas.FindIndex(contas => contas.Cpf == cpfConta);
+                                        Console.Write("Digite o cpf do destino: ");
+                                        string cpfDestino = Console.ReadLine();
+                                        int indexDestino = contas.FindIndex(contas => contas.Cpf == cpfDestino);
+                                        if (indexRemetente < 0 && indexDestino < 0)
+                                        {
+                                            Console.WriteLine();
+                                            Console.WriteLine("Operação inválida");
+                                            Console.WriteLine("Cheque os dados e tente novamente mais tarde");
+                                        }
+                                        else
+                                        {
+                                            Console.Write("Digite o valor a ser depositado: ");
+                                            double valor = double.Parse(Console.ReadLine());
+                                            contas[indexRemetente].Sacar(valor);
+                                            contas[indexDestino].Depositar(valor);
                                         }
                                         break;
                                 }
