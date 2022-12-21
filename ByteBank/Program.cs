@@ -32,6 +32,8 @@ namespace ByteBank
             else
             {
                 contas.RemoveAt(index);
+                Console.WriteLine("Conta Removida");
+                Console.WriteLine();
             }
         }
 
@@ -63,9 +65,6 @@ namespace ByteBank
             }
             else
             {
-                Console.WriteLine();
-                Console.WriteLine("Login invalido");
-                Console.WriteLine();
                 return false;
             }
 
@@ -201,12 +200,22 @@ namespace ByteBank
                                             contas[indexDestino].Depositar(valor);
                                         }
                                         break;
+                                    default:
+                                        Console.WriteLine();
+                                        Console.WriteLine("Opção inválida");
+                                        Console.WriteLine();
+                                        break;
                                 }
                             } while (optionMenu != 0);
 
 
                         }
 
+                        break;
+                    default:
+                        Console.WriteLine();
+                        Console.WriteLine("Opção inválida");
+                        Console.WriteLine();
                         break;
                 }
                 Console.WriteLine("--------------");

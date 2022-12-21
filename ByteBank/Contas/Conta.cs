@@ -6,15 +6,16 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace ByteBank.Contas
 {
     public class Conta
     {
         private string titular;
-        public string Titular { get; set; }
-        public string Cpf { get; set; }
-        public string Senha { get; set; }
+        public string Titular { get; private set; }
+        public string Cpf { get; private set; }
+        public string Senha { get; private set; }
         public double Saldo { get; private set; }
 
         public bool check;
@@ -24,16 +25,38 @@ namespace ByteBank.Contas
             if (Regex.IsMatch(titular, @"^\d+$") == true)
             {
                 check = false;
+                Console.WriteLine();
+                Console.WriteLine("Titular inválido");
+                Console.WriteLine();
                 return;
+            }
+            else if (cpf.Length < 14)
+            {
+
+                check = false;
+                Console.WriteLine();
+                Console.WriteLine("CPF inválido");
+                Console.WriteLine();
+                return;
+
+            }
+            else if (senha.Length < 8)
+            {
+                check = false;
+                Console.WriteLine();
+                Console.WriteLine("Senha inválida");
+                Console.WriteLine();
+                return;
+
             }
             else
             {
                 this.Titular = titular;
+                this.Cpf = cpf;
+                this.Senha = senha;
+                check = true;
             }
-
-            this.Cpf = cpf;
-            this.Senha = senha;
-            check = true;
+            
         }
 
 
