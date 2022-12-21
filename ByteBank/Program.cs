@@ -150,6 +150,9 @@ namespace ByteBank
 
                                 switch (optionMenu)
                                 {
+                                    case 0:
+                                        Console.WriteLine("Voltando ao menu do Banco...");
+                                        break;
                                     case 1:
                                         Console.WriteLine("Depositar");
                                         int index = contas.FindIndex(contas => contas.Cpf == cpfConta);
@@ -162,6 +165,20 @@ namespace ByteBank
                                             Console.Write("Digite o valor a ser depositado: ");
                                             double deposito = double.Parse(Console.ReadLine());
                                             contas[index].Depositar(deposito);
+                                        }
+                                        break;
+                                    case 2:
+                                        Console.WriteLine("Sacar");
+                                        int indexSaque = contas.FindIndex(contas => contas.Cpf == cpfConta);
+                                        if (indexSaque < 0)
+                                        {
+                                            Console.WriteLine("Conta inválida");
+                                        }
+                                        else
+                                        {
+                                            Console.Write("Digite o valor a ser depositado: ");
+                                            double saque = double.Parse(Console.ReadLine());
+                                            contas[indexSaque].Sacar(saque);
                                         }
                                         break;
                                 }

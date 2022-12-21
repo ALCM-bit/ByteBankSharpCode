@@ -10,6 +10,7 @@ namespace ByteBank.Sistemas
     {
         public static void ShowMenu()
         {
+            Console.WriteLine("-----------------------------------------------------");
             Console.WriteLine("1 - Inserir novo usuário");
             Console.WriteLine("2 - Deletar um usuário");
             Console.WriteLine("3 - Listar todas as contas registradas");
@@ -22,6 +23,7 @@ namespace ByteBank.Sistemas
 
         public static void ShowMenuConta() 
         {
+            Console.WriteLine("-----------------------------------------------------");
             Console.WriteLine("1 - Depositar");
             Console.WriteLine("2 - Sacar");
             Console.WriteLine("3 - Transferir");
