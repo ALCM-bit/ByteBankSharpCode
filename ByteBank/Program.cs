@@ -95,10 +95,31 @@ namespace ByteBank
                         Console.WriteLine("Informe o que é solicitado");
                         Console.Write("Informe o Titular da Conta: ");
                         string titular = Console.ReadLine();
+                        bool checkTitular = Conta.ValidarTitular(titular);
+                        while (checkTitular == false)
+                        {
+                          Console.Write("Informe o Titular da Conta (números são inválidos neste campo): ");
+                          titular = Console.ReadLine();
+                          checkTitular = Conta.ValidarTitular(titular);
+                        }
                         Console.Write("Informe o cpf do Titular: ");
                         string cpf = Console.ReadLine();
+                        bool checkCpf = Conta.ValidarCpf(cpf);
+                        while (checkCpf == false)
+                        {
+                            Console.Write("Informe o cpf do Titular (minimo 14 caracteres): ");
+                            cpf = Console.ReadLine();
+                            checkCpf = Conta.ValidarCpf(cpf);
+                        }
                         Console.Write("Informe a senha da conta: ");
                         string senha = Console.ReadLine();
+                        bool checkSenha = Conta.ValidarSenha(senha);
+                        while (checkSenha == false)
+                        {
+                            Console.Write("Informe a senha da conta (Minimo 9 caracteres): ");
+                            senha = Console.ReadLine();
+                            checkSenha = Conta.ValidarCpf(cpf);
+                        }
                         Conta conta = new Conta(titular, cpf, senha);
                         if (conta.check == true)
                         {
@@ -121,16 +142,21 @@ namespace ByteBank
                     case 3:
                         Console.WriteLine("Contas cadastradas: ");
                         ListarContas(contas);
+                        Console.WriteLine("Tecle ENTER para sair ");
+                        Console.ReadLine();
                         break;
                     case 4:
                         Console.Write("Informe o cpf a ser checado: ");
                         string cpfInformado = Console.ReadLine();
                         ChecarUsuario(contas, cpfInformado);
+                        Console.WriteLine("Tecle ENTER para sair ");
+                        Console.ReadLine();
                         break;
                     case 5:
                         Console.WriteLine("Saldo do Banco: ");
-
                         Console.WriteLine("Saldo total: " + VerificarSaldo(contas));
+                        Console.WriteLine("Tecle ENTER para sair ");
+                        Console.ReadLine();
                         break;
                     case 6:
                         Console.WriteLine("Para acessar informe o que se pede");

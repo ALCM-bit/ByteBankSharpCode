@@ -10,6 +10,7 @@ namespace ByteBank.Sistemas
     {
         public static void ShowMenu()
         {
+            Console.Clear();
             Console.WriteLine("-----------------------------------------------------");
             Console.WriteLine("1 - Inserir novo usuário");
             Console.WriteLine("2 - Deletar um usuário");
