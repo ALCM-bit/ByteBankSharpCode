@@ -1,33 +1,65 @@
 ﻿using System;
 using System.Xml.Linq;
 using System.Collections.Generic;
+using ByteBank.Contas;
+using ByteBank.Sistemas;
+using System.ComponentModel.Design;
+using System.Drawing;
 
 namespace ByteBank
 {
     public class Program
     {
-        static void ShowMenu()
+        public static void ListarContas(List<Conta> contas)
         {
-            Console.WriteLine("1 - Inserir novo usuário");
-            Console.WriteLine("2 - Deletar um usuário");
-            Console.WriteLine("3 - Listar todas as contas registradas");
-            Console.WriteLine("4 - Detalhes de um usuário");
-            Console.WriteLine("5 - Total armazenado no banco");
-            Console.WriteLine("6 - Manipular a conta"); // Implementa as operações
-            Console.WriteLine("0 - Para sair do programa");
-            Console.Write("Digite a opção desejada: ");
+            foreach (Conta conta in contas)
+            {
+                Console.WriteLine("Titular: " + conta.Titular + ", CPF: " + conta.Cpf + ", Saldo: " + conta.Saldo);
+            }
         }
 
-        static bool Logar(List<string> cpfs, List<string> titulares, List<string> senhas)
+        public static void ExcluirConta(List<Conta> contas, string cpf)
         {
-            Console.Write("Informe o cpf da Conta: ");
-            string pesquisar = Console.ReadLine();
-            bool cpf = cpfs.Any(cpfs => cpfs == pesquisar);
-            Console.Write("Informe a senha: ");
-            string pegarSenha = Console.ReadLine();
-            bool senha = senhas.Any(senhas => senhas == pegarSenha);
+            int index = contas.FindIndex(contas => contas.Cpf == cpf);
+            if (index == -1)
+            {
+                Console.WriteLine();
+                Console.WriteLine("Usuário não econtrado");
+                Console.WriteLine();
+                return;
 
-            if (cpf == true && senha == true)
+            }
+            else
+            {
+                contas.RemoveAt(index);
+                Console.WriteLine("Conta Removida");
+                Console.WriteLine();
+            }
+        }
+
+        static double VerificarSaldo(List<Conta> contas)
+        {
+            double saldo = 0.0;
+            foreach (Conta conta in contas)
+            {
+                saldo += conta.Saldo;
+            }
+
+            return saldo;
+        }
+
+        public static void ChecarUsuario(List<Conta> contas, string cpf)
+        {
+            int index = contas.FindIndex(contas => contas.Cpf == cpf);
+            Console.WriteLine($"Titular: {contas[index].Titular}");
+            Console.WriteLine($"CPF: {contas[index].Cpf}");
+            Console.WriteLine($"Saldo: {contas[index].Saldo}");
+        }
+
+        public static bool ValidarLogin(List<Conta> contas, string cpf, string senha)
+        {
+            int index = contas.FindIndex(contas => contas.Cpf == cpf);
+            if (index >= 0 && contas[index].Cpf == cpf && contas[index].Senha == senha)
             {
                 return true;
             }
@@ -35,147 +67,20 @@ namespace ByteBank
             {
                 return false;
             }
-        }
-
-        static void GerarRelatorio(List<double> saldos)
-        {
-            double total = 0;
-            for (int i = 0; i < saldos.Count; i++)
-            {
-                total+= saldos[i];
-            }
-
-            Console.WriteLine($"Total do Banco: {total}");
-
-        }
-  
-        static void Depositar(List<string> cpfs, List<string> titulares, List<double> saldos)
-        {
-            Console.Write("Informe o cpf da Conta: ");
-            string cpf = Console.ReadLine();
-            int index = cpfs.FindIndex(cpfs => cpfs == cpf);
-            Console.Write("Informe o valor a depositar: ");
-            double valor = double.Parse(Console.ReadLine());
-            saldos[index] += valor;
-            Console.WriteLine($"Saldo atual R$ {saldos[index]}");
-        }
-        static void Sacar(List<string> cpfs, List<string> titulares, List<string> senhas, List<double> saldos)
-        {
-            Console.Write("Informe o cpf da Conta: ");
-            string cpf = Console.ReadLine();
-            int index = cpfs.FindIndex(cpfs => cpfs == cpf);
-            Console.Write("Informe o valor a sacar: ");
-            double valor = double.Parse(Console.ReadLine());
-            saldos[index] -= valor;
-            Console.WriteLine($"Saldo atual R$ {saldos[index]}");
-        }
-        static void Transferir(List<string> cpfs, List<string> titulares, List<string> senhas, List<double> saldos, double valor)
-        {
-            Console.Write("Informe seu cpf: ");
-            string cpf1 = Console.ReadLine();
-            int index = cpfs.FindIndex(cpfs => cpfs == cpf1);
-            Console.Write("Informe o cpf da conta a receber: ");
-            string cpf2 = Console.ReadLine();
-            int index2 = cpfs.FindIndex(cpfs => cpfs == cpf2);
-            saldos[index2] += valor;
-            saldos[index] -= valor;
-        }
-
-        static void RegistrarNovoUsuario(List<string> cpfs, List<string> titulares, List<string> senhas, List<double> saldos)
-        {
-            Console.Write("Digite o cpf: ");
-            cpfs.Add(Console.ReadLine());
-            Console.Write("Digite o nome: ");
-            titulares.Add(Console.ReadLine());
-            Console.Write("Digite a senha: ");
-            senhas.Add(Console.ReadLine());
-            saldos.Add(0);
-        }
-
-        static void DeletarUsuario(List<string> cpfs, List<string> titulares, List<string> senhas, List<double> saldos)
-        {
-            Console.Write("Digite o cpf a ser removido: ");
-            string cpf = Console.ReadLine();
-            int index = cpfs.FindIndex(cpfs => cpfs == cpf);
-            cpfs.RemoveAt(index);
-            titulares.RemoveAt(index);
-            senhas.RemoveAt(index);
-            saldos.RemoveAt(index);
-
 
         }
 
-        static void ListarUsuarios(List<string> cpfs, List<string> titulares, List<double> saldos)
-        {
-            for (int i = 0; i < cpfs.Count; i++)
-            {
-                Console.WriteLine($"CPF = {cpfs[i]} | Titular = {titulares[i]} | Saldo = R${saldos[i]:F2}");
-            }
-        }
-
-        static void GerarRelatorioDeConta(List<string> cpfs, List<string> titulares, List<double> saldos)
-        {
-            Console.Write("Informe o cpf para localização: ");
-            string cpf = Console.ReadLine();
-            int index = cpfs.FindIndex(cpfs => cpfs == cpf);
-            Console.WriteLine($"CPF = {cpfs[index]} | Titular = {titulares[index]} | Saldo = R${saldos[index]:F2}");
-
-        }
-
-        static void ManipularConta(List<string> cpfs, List<string> titulares, List<string> senhas, List<double> saldos)
-        {
-            int option;
-            do
-            {
-                Console.WriteLine("1 - Depositar");
-                Console.WriteLine("2 - Sacar");
-                Console.WriteLine("3 - Transferir");
-                Console.WriteLine("0 - Para voltar ao menu principal");
-                Console.Write("Digite a opção desejada: ");
-                option = int.Parse(Console.ReadLine());
-
-                Console.WriteLine("--------------");
-                Console.WriteLine();
-
-                switch (option)
-                {
-                    case 1:
-                        Console.WriteLine("Depositar ");
-                        Depositar(cpfs, titulares, saldos);
-                        break;
-                    case 2:
-                        Console.WriteLine("Sacar");
-                        Sacar(cpfs, titulares, senhas, saldos);
-                        break;
-                    case 3:
-                        Console.WriteLine("Transferir");
-                        Console.Write("Insira o valor da transferencia: ");
-                        double valorTransferir = double.Parse(Console.ReadLine());
-                        Transferir(cpfs, titulares, senhas, saldos, valorTransferir);
-                        break;
-                   
-                }
-                Console.WriteLine("--------------");
-            } while (option != 0);
-        }
 
         public static void Main(string[] args)
         {
-
-            Console.WriteLine("Antes de começar a usar, vamos configurar alguns valores: ");
-            Console.Write("Digite a quantidade de Usuários: ");
             int option;
-
-            List<string> cpfs = new List<string>();
-            List<string> titulares = new List<string>();
-            List<string> senhas = new List<string>();
-            List<double> saldos = new List<double>();
+            List<Conta> contas = new List<Conta>();
 
 
 
             do
             {
-                ShowMenu();
+                Sistema.ShowMenu();
                 option = int.Parse(Console.ReadLine());
 
                 Console.WriteLine("--------------");
@@ -187,35 +92,156 @@ namespace ByteBank
                         Console.WriteLine("Estou encerrando o programa...");
                         break;
                     case 1:
-                        Console.WriteLine("Deveria estar inserindo um novo usuário!");
-                        RegistrarNovoUsuario(cpfs, titulares, senhas, saldos);
-                        break;
-                    case 2:
-                        Console.WriteLine("Você solicitou Deletar");
-                        DeletarUsuario(cpfs, titulares, senhas, saldos);
-                        break;
-                    case 3:
-                        Console.WriteLine("Informando detalhes do usuário...");
-                        ListarUsuarios(cpfs, titulares, saldos);
-                        break;
-                    case 4:
-                        Console.WriteLine("Informando saldo...");
-                        GerarRelatorioDeConta(cpfs, titulares, saldos);
-                        break;
-                    case 5:
-                        Console.WriteLine("Informando saldo total do Banco");
-                        GerarRelatorio(saldos);
-                        break;
-                    case 6:
-                        bool check = Logar(cpfs, titulares, senhas);
-                        if (check == true)
+                        Console.WriteLine("Informe o que é solicitado");
+                        Console.Write("Informe o Titular da Conta: ");
+                        string titular = Console.ReadLine();
+                        bool checkTitular = Conta.ValidarTitular(titular);
+                        while (checkTitular == false)
                         {
-                           ManipularConta(cpfs, titulares, senhas, saldos);
+                          Console.Write("Informe o Titular da Conta (números são inválidos neste campo): ");
+                          titular = Console.ReadLine();
+                          checkTitular = Conta.ValidarTitular(titular);
+                        }
+                        Console.Write("Informe o cpf do Titular: ");
+                        string cpf = Console.ReadLine();
+                        bool checkCpf = Conta.ValidarCpf(cpf);
+                        while (checkCpf == false)
+                        {
+                            Console.Write("Informe o cpf do Titular (minimo 14 caracteres): ");
+                            cpf = Console.ReadLine();
+                            checkCpf = Conta.ValidarCpf(cpf);
+                        }
+                        Console.Write("Informe a senha da conta: ");
+                        string senha = Console.ReadLine();
+                        bool checkSenha = Conta.ValidarSenha(senha);
+                        while (checkSenha == false)
+                        {
+                            Console.Write("Informe a senha da conta (Minimo 9 caracteres): ");
+                            senha = Console.ReadLine();
+                            checkSenha = Conta.ValidarCpf(cpf);
+                        }
+                        Conta conta = new Conta(titular, cpf, senha);
+                        if (conta.check == true)
+                        {
+                            contas.Add(conta);
                         }
                         else
                         {
-                            Console.WriteLine("Login ou senha Invalidos !!!");
+                            Console.WriteLine();
+                            Console.WriteLine("Valores inválidos");
+                            Console.WriteLine();
                         }
+
+                        break;
+                    case 2:
+                        Console.WriteLine("Você solicitou Deletar");
+                        Console.Write("Digite o nome do titular: ");
+                        string nome = Console.ReadLine();
+                        ExcluirConta(contas, nome);
+                        break;
+                    case 3:
+                        Console.WriteLine("Contas cadastradas: ");
+                        ListarContas(contas);
+                        Console.WriteLine("Tecle ENTER para sair ");
+                        Console.ReadLine();
+                        break;
+                    case 4:
+                        Console.Write("Informe o cpf a ser checado: ");
+                        string cpfInformado = Console.ReadLine();
+                        ChecarUsuario(contas, cpfInformado);
+                        Console.WriteLine("Tecle ENTER para sair ");
+                        Console.ReadLine();
+                        break;
+                    case 5:
+                        Console.WriteLine("Saldo do Banco: ");
+                        Console.WriteLine("Saldo total: " + VerificarSaldo(contas));
+                        Console.WriteLine("Tecle ENTER para sair ");
+                        Console.ReadLine();
+                        break;
+                    case 6:
+                        Console.WriteLine("Para acessar informe o que se pede");
+                        Console.Write("Cpf: ");
+                        string cpfConta = Console.ReadLine();
+                        Console.Write("Senha: ");
+                        string senhaConta = Console.ReadLine();
+
+                        if (ValidarLogin(contas, cpfConta, senhaConta) == true)
+                        {
+                            int optionMenu = 0;
+                            do
+                            {
+                                Sistema.ShowMenuConta();
+                                optionMenu = int.Parse(Console.ReadLine());
+
+                                switch (optionMenu)
+                                {
+                                    case 0:
+                                        Console.WriteLine("Voltando ao menu do Banco...");
+                                        break;
+                                    case 1:
+                                        Console.WriteLine("Depositar");
+                                        int index = contas.FindIndex(contas => contas.Cpf == cpfConta);
+                                        if (index < 0)
+                                        {
+                                            Console.WriteLine("Conta inválida");
+                                        }
+                                        else
+                                        {
+                                            Console.Write("Digite o valor a ser depositado: ");
+                                            double deposito = double.Parse(Console.ReadLine());
+                                            contas[index].Depositar(deposito);
+                                        }
+                                        break;
+                                    case 2:
+                                        Console.WriteLine("Sacar");
+                                        int indexSaque = contas.FindIndex(contas => contas.Cpf == cpfConta);
+                                        if (indexSaque < 0)
+                                        {
+                                            Console.WriteLine("Conta inválida");
+                                        }
+                                        else
+                                        {
+                                            Console.Write("Digite o valor a ser depositado: ");
+                                            double saque = double.Parse(Console.ReadLine());
+                                            contas[indexSaque].Sacar(saque);
+                                        }
+                                        break;
+                                    case 3:
+                                        Console.WriteLine("Transferir");
+                                        int indexRemetente = contas.FindIndex(contas => contas.Cpf == cpfConta);
+                                        Console.Write("Digite o cpf do destino: ");
+                                        string cpfDestino = Console.ReadLine();
+                                        int indexDestino = contas.FindIndex(contas => contas.Cpf == cpfDestino);
+                                        if (indexRemetente < 0 && indexDestino < 0)
+                                        {
+                                            Console.WriteLine();
+                                            Console.WriteLine("Operação inválida");
+                                            Console.WriteLine("Cheque os dados e tente novamente mais tarde");
+                                        }
+                                        else
+                                        {
+                                            Console.Write("Digite o valor a ser depositado: ");
+                                            double valor = double.Parse(Console.ReadLine());
+                                            contas[indexRemetente].Sacar(valor);
+                                            contas[indexDestino].Depositar(valor);
+                                        }
+                                        break;
+                                    default:
+                                        Console.WriteLine();
+                                        Console.WriteLine("Opção inválida");
+                                        Console.WriteLine();
+                                        break;
+                                }
+                            } while (optionMenu != 0);
+
+
+                        }
+
+                        break;
+                    default:
+                        Console.WriteLine();
+                        Console.WriteLine("Opção inválida");
+                        Console.WriteLine();
                         break;
                 }
                 Console.WriteLine("--------------");
