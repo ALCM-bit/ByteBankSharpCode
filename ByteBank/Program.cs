@@ -14,7 +14,8 @@ namespace ByteBank
         {
             foreach (Conta conta in contas)
             {
-                Console.WriteLine("Titular: " + conta.Titular + ", CPF: " + conta.Cpf + ", Saldo: " + conta.Saldo);
+                Console.WriteLine("Titular: " + conta.Titular + ",\nCPF: " + conta.Cpf + ",\nSaldo: " + conta.Saldo
+                    + "\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
             }
         }
 
@@ -107,7 +108,7 @@ namespace ByteBank
                         bool checkCpf = Conta.ValidarCpf(cpf);
                         while (checkCpf == false)
                         {
-                            Console.Write("Informe o cpf do Titular (minimo 14 caracteres): ");
+                            Console.Write("Informe o cpf do Titular (minimo 11 caracteres sem pontuação): ");
                             cpf = Console.ReadLine();
                             checkCpf = Conta.ValidarCpf(cpf);
                         }
@@ -235,6 +236,12 @@ namespace ByteBank
                             } while (optionMenu != 0);
 
 
+                        }
+                        else
+                        {
+                            Console.WriteLine("Login Inválido");
+                            Console.WriteLine("Aperte ENTER para sair");
+                            Console.ReadLine();
                         }
 
                         break;

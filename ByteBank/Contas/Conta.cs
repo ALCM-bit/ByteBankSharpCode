@@ -49,7 +49,7 @@ namespace ByteBank.Contas
 
         public static bool ValidarCpf(string cpf)
         {
-            if (cpf.Length < 14)
+            if (cpf.Length < 11)
             {
 
                 Console.WriteLine();
