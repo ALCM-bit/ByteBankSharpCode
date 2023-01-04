@@ -34,7 +34,7 @@ namespace ByteBank.Contas
 
         public static bool ValidarTitular(string titular)
         {
-            if (Regex.IsMatch(titular, @"^\d+$") == true)
+            if ((Regex.IsMatch(titular, @"^\d+$") == true) || (titular.Length < 3))
             {
                 Console.WriteLine();
                 Console.WriteLine("Titular inválido");
@@ -49,7 +49,8 @@ namespace ByteBank.Contas
 
         public static bool ValidarCpf(string cpf)
         {
-            if (cpf.Length < 11)
+            var teste = new Regex(@"");
+            if ((cpf.Length < 11) && ((Regex.IsMatch(cpf, @"\d{3}\d{3}\d{3}\d{2}") == true)))
             {
 
                 Console.WriteLine();

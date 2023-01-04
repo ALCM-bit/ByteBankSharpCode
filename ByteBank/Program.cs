@@ -188,9 +188,16 @@ namespace ByteBank
                                         }
                                         else
                                         {
-                                            Console.Write("Digite o valor a ser depositado: ");
-                                            double deposito = double.Parse(Console.ReadLine());
-                                            contas[index].Depositar(deposito);
+                                            try
+                                            {
+                                              Console.Write("Digite o valor a ser Depositado: ");
+                                              double deposito = double.Parse(Console.ReadLine());
+                                              contas[index].Depositar(deposito);
+                                            }
+                                            catch
+                                            {
+                                                Console.WriteLine("Valor Inválido");
+                                            }
                                         }
                                         break;
                                     case 2:
@@ -202,9 +209,18 @@ namespace ByteBank
                                         }
                                         else
                                         {
-                                            Console.Write("Digite o valor a ser depositado: ");
-                                            double saque = double.Parse(Console.ReadLine());
-                                            contas[indexSaque].Sacar(saque);
+                                            try
+                                            {
+
+
+                                                Console.Write("Digite o valor a ser Sacado: ");
+                                                double saque = double.Parse(Console.ReadLine());
+                                                contas[indexSaque].Sacar(saque);
+                                            }
+                                            catch
+                                            {
+                                                Console.WriteLine("Valor Inválido");
+                                            }
                                         }
                                         break;
                                     case 3:
@@ -221,10 +237,17 @@ namespace ByteBank
                                         }
                                         else
                                         {
-                                            Console.Write("Digite o valor a ser depositado: ");
-                                            double valor = double.Parse(Console.ReadLine());
-                                            contas[indexRemetente].Sacar(valor);
-                                            contas[indexDestino].Depositar(valor);
+                                            try
+                                            {
+                                                Console.Write("Digite o valor a ser Transferido: ");
+                                                double valor = double.Parse(Console.ReadLine());
+                                                contas[indexRemetente].Sacar(valor);
+                                                contas[indexDestino].Depositar(valor);
+                                            }
+                                            catch
+                                            {
+                                                Console.WriteLine("Valor Inválido");
+                                            }
                                         }
                                         break;
                                     default:
