@@ -49,8 +49,9 @@ namespace ByteBank.Contas
 
         public static bool ValidarCpf(string cpf)
         {
-            var teste = new Regex(@"");
-            if ((cpf.Length < 11) && ((Regex.IsMatch(cpf, @"\d{3}\d{3}\d{3}\d{2}") == true)))
+            var regexCPF = new Regex(@"^[0-9]+$");
+            bool teste = regexCPF.IsMatch(cpf);
+            if ((cpf.Length < 11) || (teste == false))
             {
 
                 Console.WriteLine();
