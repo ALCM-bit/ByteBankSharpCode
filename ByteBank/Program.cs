@@ -136,7 +136,7 @@ namespace ByteBank
                         break;
                     case 2:
                         Console.WriteLine("Você solicitou Deletar");
-                        Console.Write("Digite o nome do titular: ");
+                        Console.Write("Digite o cpf da conta ser deletado: ");
                         string nome = Console.ReadLine();
                         ExcluirConta(contas, nome);
                         break;
