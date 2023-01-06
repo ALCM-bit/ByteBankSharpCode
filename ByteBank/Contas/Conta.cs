@@ -12,7 +12,6 @@ namespace ByteBank.Contas
 {
     public class Conta
     {
-        private string titular;
         public string Titular { get; private set; }
         public string Cpf { get; private set; }
         public string Senha { get; private set; }

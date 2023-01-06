@@ -82,8 +82,15 @@ namespace ByteBank
             do
             {
                 Sistema.ShowMenu();
-                option = int.Parse(Console.ReadLine());
-
+                try
+                {
+                    option = int.Parse(Console.ReadLine());
+                }
+                catch
+                {
+                    option = 8;
+                }
+                
                 Console.WriteLine("--------------");
                 Console.WriteLine();
 
@@ -148,10 +155,19 @@ namespace ByteBank
                         break;
                     case 4:
                         Console.Write("Informe o cpf a ser checado: ");
-                        string cpfInformado = Console.ReadLine();
-                        ChecarUsuario(contas, cpfInformado);
-                        Console.WriteLine("Tecle ENTER para sair ");
-                        Console.ReadLine();
+                        try
+                        {
+                            string cpfInformado = Console.ReadLine();
+                            ChecarUsuario(contas, cpfInformado);
+                            Console.WriteLine("Tecle ENTER para sair ");
+                            Console.ReadLine();
+                        }
+                        catch
+                        {
+                            Console.WriteLine("Valor inválido");
+                            Console.WriteLine("Tecle ENTER para sair ");
+                            Console.ReadLine();
+                        }
                         break;
                     case 5:
                         Console.WriteLine("Saldo do Banco: ");
@@ -172,8 +188,15 @@ namespace ByteBank
                             do
                             {
                                 Sistema.ShowMenuConta();
-                                optionMenu = int.Parse(Console.ReadLine());
-
+                                try
+                                {
+                                   optionMenu = int.Parse(Console.ReadLine());
+                                }
+                                catch
+                                {
+                                    optionMenu = 8;
+                                }
+                                
                                 switch (optionMenu)
                                 {
                                     case 0:
@@ -271,6 +294,8 @@ namespace ByteBank
                     default:
                         Console.WriteLine();
                         Console.WriteLine("Opção inválida");
+                        Console.WriteLine("Aprete ENTER para sair");
+                        Console.ReadLine();
                         Console.WriteLine();
                         break;
                 }
